@@ -1,0 +1,82 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./infra/nginx/Dockerfile
+    ports:
+      - target: 80
+        published: ${WEB_PORT:-80}
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: volume
+        source: php-fpm-socket
+        target: /var/run/php-fpm
+        volume:
+          nocopy: true
+      - type: bind
+        source: ./laravel
+        target: /project-laravel/laravel
+
+  app:
+    build:
+      context: .
+      dockerfile: ./infra/php/Dockerfile
+    volumes:
+      - type: volume
+        source: php-fpm-socket
+        target: /var/run/php-fpm
+        volume:
+          nocopy: true
+      - type: bind
+        source: ./laravel
+        target: /project-laravel/laravel
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=${DB_PORT:-3306}
+      - DB_DATABASE=${DB_NAME:-laravel_db}
+      - DB_USERNAME=${DB_USER:-php_user}
+      - DB_PASSWORD=${DB_PASS:-secret}
+
+  db:
+    build: 
+      context: .
+      dockerfile: ./infra/mysql/Dockerfile
+    ports:
+      - target: 3306
+        published: ${DB_PORT:-3306}
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: volume
+        source: db-store
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
+    environment:
+      - MYSQL_DATABASE=${DB_NAME:-laravel_db}
+      - MYSQL_USER=${DB_USER:-php_user}
+      - MYSQL_PASSWORD=${DB_PASS:-secret}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS:-secret}
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - target: 80
+        published: ${PHPMYADMIN_PORT:-8880}
+        protocol: tcp
+        mode: host
+    volumes:
+      - pma-session-store:/sessions
+    environment:
+      - PMA_HOST=db
+      - PMA_USER=${DB_USER:-php_user}
+      - PMA_PASSWORD=${DB_PASS:-secret}
+
+volumes:
+  php-fpm-socket:
+  db-store:
+  pma-session-store:
