@@ -19,8 +19,8 @@ jobs:
           script: |
             cd ${{ secrets.SERVER_DEPLOY_DIR }}
             git pull origin main
-            docker compose down
-            docker compose build
-            docker compose up -d
+      - run: docker compose down
+      - run: docker compose build
+      - run: docker compose up -d
 
   
