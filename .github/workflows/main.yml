@@ -17,4 +17,4 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ${{ secrets.SERVER_DEPLOY_DIR }}
-            git pull git@github.com:kuma-24/project-laravel.git
+            git pull origin main
