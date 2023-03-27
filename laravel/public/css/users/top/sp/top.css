@@ -1,0 +1,37 @@
+@media screen and (max-width:480px) {
+  .header-top {
+    margin-top: 3%;
+  }
+  
+  .header-link {
+    display: flex;
+    width: fit-content;
+    margin: 0 auto;
+    text-decoration: none;
+    align-items: center;
+  }
+  
+  .header-top-logo {
+    object-fit: cover;
+    width: 15vw;
+    margin: 1.3vw; 
+  }
+
+  .header-top-name {
+    font-family: "MS Pゴシック", "メイリオ", sans-serif;
+    font-size: 6vw;
+    color: black;
+  }
+
+  .content-top {
+
+  }
+
+  .content-top-images {
+    display: flex;
+  }
+
+  .content-top-images img {
+    
+  }
+}
