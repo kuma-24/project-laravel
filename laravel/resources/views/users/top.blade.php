@@ -27,8 +27,8 @@
       </div>
       <p class="content-top-phrase">Let's get started, point activities!</p>
       <div class="content-top-actions">
-        <a class="content-top-signup button">SingUp</a>
-        <a class="content-top-signin button">SingIn</a>
+        <a class="content-top-signup button" href="{{ route('users.signup') }}">SingUp</a>
+        <a class="content-top-signin button" href="{{ route('users.signin') }}">SingIn</a>
       </div>
     </main>
   </body>
