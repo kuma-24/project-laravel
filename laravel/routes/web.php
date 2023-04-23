@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AdministratorSessionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,22 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::group(['prefix' => 'admins'], function () {
+    Route::get('/', function () {
+        return view('admins.top');
+    })->name('admins.top');
+
+    Route::get('login', [AdministratorSessionController::class, 'create'])->name('admins.login');
+    Route::post('login', [AdministratorSessionController::class, 'store'])->name('admins.authentication');
+    Route::post('logout', [AdministratorSessionController::class, 'destroy'])->name('admins.logout');
+
+    Route::middleware(['auth:admin'])->group(function () {
+        Route::get('/index', function () {
+            return view('admins.index');
+        })->name('admins.index');
+    });
+});
 
 Route::group(['prefix' => 'users'], function () {
     Route::get('/', function () {
