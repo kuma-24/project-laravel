@@ -32,6 +32,16 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'email.required'    => 'メールアドレスは入力必須です。',
+            'email.string'      => 'メールアドレスは文字列で入力してください',
+            'email.email'       => 'メールアドレスの形式が無効です。',
+            'password.required' => 'パスワードは入力必須です。',
+        ];
+    }
+
     /**
      * Attempt to authenticate the request's credentials.
      *
