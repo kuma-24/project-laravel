@@ -8,6 +8,15 @@
   </head>
   <body>
     <h1>会員登録</h1>
+
+    <div>
+      <ul>
+        @foreach ($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    </div>
+
     <form action="{{ route('signup') }}" method="post">
         @csrf 
         <dl class="form-list">
