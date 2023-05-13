@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\Auth\LoginAdminRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -14,7 +15,7 @@ class AdministratorSessionController extends Controller
     return view('admins.auth.login');
   }
 
-  public function store(Request $request) 
+  public function store(LoginAdminRequest $request) 
   {
     $credentials = $request->only(['employee_code', 'password']);
 
